@@ -7,7 +7,7 @@ One stylesheet. One font (Inter). Seven accent colors. Drop it into any project 
 ## What's in here
 
 - **`cascadia.css`** — The stylesheet. Copy this into your project.
-- **`index.html`** — Visual reference showing every token, component, and variant. Open it in a browser or [view it on GitHub Pages](#) if enabled.
+- **`index.html`** — Visual reference showing every token, component, and variant. Open it in a browser or [view it on GitHub Pages](https://aaronmiler.github.io/cascadia-design-system/) if enabled.
 - **`DESIGN.md`** — Full specification: colors, typography, spacing, components, and rules. Written to be useful to both humans and coding assistants — feed it to your LLM and it'll know what to build.
 
 ## Quick start
