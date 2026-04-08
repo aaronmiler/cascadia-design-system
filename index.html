@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cascadia — Design System Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="cascadia.css">
+  <style>
+    /* ========================================
+       PREVIEW-ONLY STYLES
+       These are for the preview page layout,
+       not part of the design system.
+       ======================================== */
+
+    /* Accent picker in navbar */
+    .nav-accent-picker {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      position: relative;
+    }
+
+    .nav-accent-picker select {
+      appearance: none;
+      font-family: var(--font-family);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--pnw-ink);
+      background-color: rgba(255, 255, 255, 0.15);
+      color: var(--cascadia-snow);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: 5px 28px 5px 10px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23F8FAFB' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      transition: background-color 0.15s ease;
+    }
+
+    .nav-accent-picker select:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .nav-accent-picker select:focus-visible {
+      outline: 2px solid var(--interactive-focus);
+      outline-offset: 2px;
+    }
+
+    .nav-accent-picker select option {
+      color: var(--pnw-ink);
+      background: #fff;
+    }
+
+    .nav-accent-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      flex-shrink: 0;
+    }
+
+    .nav-accent-checkbox {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      cursor: pointer;
+    }
+
+    .nav-accent-checkbox input[type="checkbox"] {
+      accent-color: var(--app-accent);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .nav-accent-checkbox span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      white-space: nowrap;
+    }
+
+    /* Color swatches */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .swatch {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--fog);
+    }
+
+    .swatch-color {
+      height: 80px;
+    }
+
+    .swatch-info {
+      padding: var(--space-3);
+      background: #fff;
+    }
+
+    .swatch-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--pnw-ink);
+    }
+
+    .swatch-hex {
+      font-size: 0.75rem;
+      color: var(--timber);
+      font-family: monospace;
+    }
+
+    /* Elevation demo */
+    .elevation-demo {
+      display: flex;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .elevation-box {
+      width: 160px;
+      height: 100px;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--timber);
+    }
+
+    .elevation-box--0 { border: 1px solid var(--fog); }
+    .elevation-box--1 { box-shadow: var(--shadow-1); }
+    .elevation-box--2 { box-shadow: var(--shadow-2); }
+    .elevation-box--3 { box-shadow: var(--shadow-3); }
+
+    /* Radius demo */
+    .radius-demo {
+      display: flex;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .radius-box {
+      width: 80px;
+      height: 80px;
+      background-color: var(--cascadia-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Spacing demo */
+    .spacing-demo {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .spacing-block {
+      background-color: var(--app-accent);
+      border-radius: var(--radius-sm);
+      min-width: 32px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: var(--space-1);
+      font-size: 0.625rem;
+      font-weight: 500;
+      color: var(--pnw-ink);
+    }
+
+    /* Inline nav demos get rounded corners */
+    .nav-demo {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    /* Active accent indicator on accent cards */
+    .accent-card-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================
+       NAVIGATION
+       ====================================== -->
+  <nav class="nav-bar" role="navigation" aria-label="Primary navigation">
+    <a href="#" class="app-name">Cascadia</a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Overview</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#layout">Layout</a></li>
+    </ul>
+    <div class="nav-accent-picker">
+      <div class="nav-accent-swatch" id="accent-swatch"></div>
+      <select id="accent-select"></select>
+      <label class="nav-accent-checkbox">
+        <input type="checkbox" id="accent-nav-toggle">
+        <span>Accent nav</span>
+      </label>
+    </div>
+  </nav>
+
+  <div class="page-container">
+
+    <!-- ======================================
+         HERO
+         ====================================== -->
+    <header class="hero">
+      <h1 class="display-hero">Cascadia design system</h1>
+      <p class="subtitle">
+        Rooted in the Pacific Northwest — intentional without being precious,
+        warm without being cluttered.
+      </p>
+    </header>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         COLORS
+         ====================================== -->
+    <section class="section" id="colors">
+      <h2 class="section-heading">Color palette</h2>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Primary brand (Cascadia)</h3>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--cascadia-green);"></div>
+            <div class="swatch-info"><div class="swatch-name">Cascadia Green</div><div class="swatch-hex">#00573F</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--cascadia-blue);"></div>
+            <div class="swatch-info"><div class="swatch-name">Cascadia Blue</div><div class="swatch-hex">#002B5C</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--cascadia-snow);"></div>
+            <div class="swatch-info"><div class="swatch-name">Cascadia Snow</div><div class="swatch-hex">#F8FAFB</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Warm accents (Oregon / Portland)</h3>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--oregon-gold);"></div>
+            <div class="swatch-info"><div class="swatch-name">Oregon Gold</div><div class="swatch-hex">#E4A520</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--portland-yellow);"></div>
+            <div class="swatch-info"><div class="swatch-name">Portland Yellow</div><div class="swatch-hex">#FFB81C</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--portland-green);"></div>
+            <div class="swatch-info"><div class="swatch-name">Portland Green</div><div class="swatch-hex">#046A38</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--portland-blue);"></div>
+            <div class="swatch-info"><div class="swatch-name">Portland Blue</div><div class="swatch-hex">#418FDE</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Tertiary accents (PNW-derived)</h3>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--madrone);"></div>
+            <div class="swatch-info"><div class="swatch-name">Madrone</div><div class="swatch-hex">#B87333</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--trout);"></div>
+            <div class="swatch-info"><div class="swatch-name">Trout</div><div class="swatch-hex">#2A9D8F</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--huckleberry);"></div>
+            <div class="swatch-info"><div class="swatch-name">Huckleberry</div><div class="swatch-hex">#8B5A8A</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Neutral scale</h3>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--pnw-ink);"></div>
+            <div class="swatch-info"><div class="swatch-name">PNW Ink</div><div class="swatch-hex">#1A2332</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--timber);"></div>
+            <div class="swatch-info"><div class="swatch-name">Timber</div><div class="swatch-hex">#4A5568</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--driftwood);"></div>
+            <div class="swatch-info"><div class="swatch-name">Driftwood</div><div class="swatch-hex">#A0AEC0</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--fog);"></div>
+            <div class="swatch-info"><div class="swatch-name">Fog</div><div class="swatch-hex">#E2E8F0</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--overcast);"></div>
+            <div class="swatch-info"><div class="swatch-name">Overcast</div><div class="swatch-hex">#F1F5F9</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Semantic / interactive states</h3>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--oregon-gold);"></div>
+            <div class="swatch-info"><div class="swatch-name">Default</div><div class="swatch-hex">Oregon Gold</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--portland-yellow);"></div>
+            <div class="swatch-info"><div class="swatch-name">Hover</div><div class="swatch-hex">Portland Yellow</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--portland-blue);"></div>
+            <div class="swatch-info"><div class="swatch-name">Focus</div><div class="swatch-hex">Portland Blue</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--cascadia-green);"></div>
+            <div class="swatch-info"><div class="swatch-name">Active</div><div class="swatch-hex">Cascadia Green</div></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background-color: var(--destructive);"></div>
+            <div class="swatch-info"><div class="swatch-name">Destructive</div><div class="swatch-hex">#C53030</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         TYPOGRAPHY
+         ====================================== -->
+    <section class="section" id="typography">
+      <h2 class="section-heading">Typography</h2>
+
+      <div class="subsection">
+        <p class="body-small text-muted mb-6">
+          Inter — one family, three weights (300, 400, 500). Size creates hierarchy. Sentence case everywhere.
+        </p>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Display hero — 48px / weight 300 / line-height 1.20</p>
+          <p class="display-hero">Projects this quarter</p>
+        </div>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Page heading — 32px / weight 400 / line-height 1.30</p>
+          <p class="page-heading">Weekly activity summary</p>
+        </div>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Section heading — 24px / weight 500 / line-height 1.40</p>
+          <p class="section-heading" style="color: var(--pnw-ink);">Recent activity</p>
+        </div>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Card title — 18px / weight 500 / line-height 1.40</p>
+          <p class="card-title">Backyard sensor network</p>
+        </div>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Body — 16px / weight 400 / line-height 1.65</p>
+          <p class="body-text">A lightweight monitoring setup that checks temperature, humidity, and soil moisture across three garden zones. Data syncs every fifteen minutes and alerts when readings fall outside configured thresholds.</p>
+        </div>
+
+        <div class="mb-8">
+          <p class="caption text-driftwood mb-2">Body small — 14px / weight 400 / line-height 1.50</p>
+          <p class="body-small text-muted">Updated 2 hours ago · 3 zones · 12 sensors</p>
+        </div>
+
+        <div>
+          <p class="caption text-driftwood mb-2">Caption / meta — 12px / weight 500 / line-height 1.50</p>
+          <p class="caption text-muted">Last updated Mar 12, 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         COMPONENTS
+         ====================================== -->
+    <section class="section" id="components">
+      <h2 class="section-heading">Components</h2>
+
+      <!-- Buttons -->
+      <div class="subsection">
+        <h3 class="subsection-title">Buttons</h3>
+        <div style="display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center;">
+          <button class="btn btn--primary">Primary action</button>
+          <button class="btn btn--secondary">Secondary</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--destructive">Delete</button>
+          <button class="btn btn--primary btn--compact">Compact</button>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="subsection">
+        <h3 class="subsection-title">Cards</h3>
+        <div class="card-grid">
+          <div class="card card--interactive">
+            <h4 class="card-title">Garage door monitor</h4>
+            <p class="card-body">Tracks open/close state with a magnetic reed sensor. Sends alerts if left open past 10pm.</p>
+            <div class="mt-4">
+              <span class="badge badge--positive">Active</span>
+              <span class="badge badge--neutral">Automation</span>
+            </div>
+          </div>
+          <div class="card card--interactive">
+            <h4 class="card-title">Weekly grocery list</h4>
+            <p class="card-body">Shared household list that syncs across devices. Organize by store aisle or category.</p>
+            <div class="mt-4">
+              <span class="badge badge--accent">Pinned</span>
+              <span class="badge badge--neutral">12 items</span>
+            </div>
+          </div>
+          <div class="card card--interactive card--surface">
+            <h4 class="card-title">This week</h4>
+            <div style="display: flex; gap: var(--space-8); margin-top: var(--space-4);">
+              <div class="stat-card">
+                <div class="stat-value">14</div>
+                <div class="stat-label">Tasks done</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Pending</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forms -->
+      <div class="subsection">
+        <h3 class="subsection-title">Forms &amp; inputs</h3>
+        <div class="card" style="max-width: 560px;">
+          <h4 class="card-title mb-6">Add an item</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="item-name">Name</label>
+              <input class="form-input" type="text" id="item-name" placeholder="What are you adding?">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-category">Category</label>
+              <select class="form-input" id="item-category">
+                <option>Task</option>
+                <option>Note</option>
+                <option>Reminder</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="item-notes">Notes</label>
+            <textarea class="form-input" id="item-notes" placeholder="Any details..." rows="3"></textarea>
+          </div>
+          <div style="display: flex; gap: var(--space-3); justify-content: flex-end;">
+            <button class="btn btn--ghost">Cancel</button>
+            <button class="btn btn--primary">Save item</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="subsection">
+        <h3 class="subsection-title">Table</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Apr 5</td>
+                <td>Update deployment scripts</td>
+                <td><span class="badge badge--positive">Done</span></td>
+                <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
+              </tr>
+              <tr>
+                <td>Apr 4</td>
+                <td>Review pull requests</td>
+                <td><span class="badge badge--positive">Done</span></td>
+                <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9734;</td>
+              </tr>
+              <tr>
+                <td>Apr 4</td>
+                <td>Fix notification service</td>
+                <td><span class="badge badge--warning">In progress</span></td>
+                <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
+              </tr>
+              <tr>
+                <td>Apr 3</td>
+                <td>Archive old logs</td>
+                <td><span class="badge badge--neutral">Backlog</span></td>
+                <td class="text-accent">&#9733;&#9733;&#9733;&#9734;&#9734;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="subsection">
+        <h3 class="subsection-title">Badges &amp; tags</h3>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <span class="badge badge--neutral">Neutral</span>
+          <span class="badge badge--positive">Positive</span>
+          <span class="badge badge--warning">Warning</span>
+          <span class="badge badge--negative">Negative</span>
+          <span class="badge badge--accent">Accent</span>
+        </div>
+      </div>
+
+      <!-- Modal trigger -->
+      <div class="subsection">
+        <h3 class="subsection-title">Modal</h3>
+        <button class="btn btn--secondary" onclick="document.getElementById('modal-demo').classList.add('is-visible')">Open modal</button>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         DEPTH & ELEVATION
+         ====================================== -->
+    <section class="section" id="depth">
+      <h2 class="section-heading">Depth &amp; elevation</h2>
+      <div class="elevation-demo">
+        <div class="elevation-box elevation-box--0">Level 0</div>
+        <div class="elevation-box elevation-box--1">Level 1</div>
+        <div class="elevation-box elevation-box--2">Level 2</div>
+        <div class="elevation-box elevation-box--3">Level 3</div>
+      </div>
+      <p class="body-small text-muted mt-4">
+        Flat by default. Prefer borders and background shifts over shadows. Depth is layered ridgelines, not loud drops.
+      </p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         BORDER RADIUS
+         ====================================== -->
+    <section class="section">
+      <h2 class="section-heading">Border radius</h2>
+      <div class="radius-demo">
+        <div>
+          <div class="radius-box" style="border-radius: var(--radius-sm);">sm</div>
+          <p class="caption text-muted" style="text-align:center; margin-top: var(--space-2);">4px</p>
+        </div>
+        <div>
+          <div class="radius-box" style="border-radius: var(--radius-md);">md</div>
+          <p class="caption text-muted" style="text-align:center; margin-top: var(--space-2);">6px</p>
+        </div>
+        <div>
+          <div class="radius-box" style="border-radius: var(--radius-lg);">lg</div>
+          <p class="caption text-muted" style="text-align:center; margin-top: var(--space-2);">8px</p>
+        </div>
+        <div>
+          <div class="radius-box" style="border-radius: var(--radius-pill); width: 120px;">pill</div>
+          <p class="caption text-muted" style="text-align:center; margin-top: var(--space-2);">9999px</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         SPACING
+         ====================================== -->
+    <section class="section" id="layout">
+      <h2 class="section-heading">Spacing scale</h2>
+      <p class="body-small text-muted mb-6">Base unit: 4px. All spacing derives from this scale.</p>
+      <div class="spacing-demo">
+        <div class="spacing-block" style="height: 4px; width: 48px;"></div>
+        <div class="spacing-block" style="height: 8px; width: 48px;"></div>
+        <div class="spacing-block" style="height: 12px; width: 48px;"></div>
+        <div class="spacing-block" style="height: 16px; width: 48px;">16</div>
+        <div class="spacing-block" style="height: 20px; width: 48px;">20</div>
+        <div class="spacing-block" style="height: 24px; width: 48px;">24</div>
+        <div class="spacing-block" style="height: 32px; width: 48px;">32</div>
+        <div class="spacing-block" style="height: 40px; width: 48px;">40</div>
+        <div class="spacing-block" style="height: 48px; width: 48px;">48</div>
+        <div class="spacing-block" style="height: 64px; width: 48px;">64</div>
+        <div class="spacing-block" style="height: 80px; width: 48px;">80</div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         NAVIGATION VARIANTS
+         ====================================== -->
+    <section class="section">
+      <h2 class="section-heading">Navigation variants</h2>
+      <div class="subsection">
+        <h3 class="subsection-title mb-4">Green (default)</h3>
+        <nav class="nav-bar nav-demo">
+          <a href="#" class="app-name">App name</a>
+          <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Items</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="subsection">
+        <h3 class="subsection-title mb-4">Blue (dark variant)</h3>
+        <nav class="nav-bar nav-bar--dark nav-demo">
+          <a href="#" class="app-name">App name</a>
+          <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="subsection">
+        <h3 class="subsection-title mb-4">Accent navbar (for high-contrast accents)</h3>
+        <nav class="nav-bar nav-demo" id="accent-nav-demo" style="--nav-bg: var(--app-accent); --nav-app-name: #fff; --nav-active: #fff;">
+          <a href="#" class="app-name">App name</a>
+          <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Items</a></li>
+            <li><a href="#">Settings</a></li>
+          </ul>
+        </nav>
+        <p class="body-small text-muted mt-4">
+          Override <code>--nav-bg</code>, <code>--nav-app-name</code>, and <code>--nav-active</code> when the accent doesn't contrast well against green.
+        </p>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         DO'S AND DON'TS
+         ====================================== -->
+    <section class="section">
+      <h2 class="section-heading">Do's and don'ts</h2>
+      <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card" style="border-top: 3px solid var(--portland-green);">
+          <h4 class="card-title" style="color: var(--portland-green);">Do</h4>
+          <ul class="body-small" style="color: var(--timber); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
+            <li>Use Cascadia Green for navigation and structural elements</li>
+            <li>Use the warm accent for interactive elements and highlights</li>
+            <li>Keep border-radius at 6-8px</li>
+            <li>Use sentence case for all headings</li>
+            <li>Keep line-heights generous on body text (1.50+)</li>
+            <li>Design for mobile-first interaction</li>
+            <li>Use the Fog / Overcast / Snow scale for depth without shadows</li>
+          </ul>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--destructive);">
+          <h4 class="card-title" style="color: var(--destructive);">Don't</h4>
+          <ul class="body-small" style="color: var(--timber); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
+            <li>Use Cascadia Green or Blue for large interactive surfaces</li>
+            <li>Uppercase anything except table headers and badges</li>
+            <li>Go below 6px or above 8px radius (except pills)</li>
+            <li>Use heavy font weights (700+) — 500 is the max</li>
+            <li>Introduce colors outside the flag-derived palette</li>
+            <li>Over-shadow — reach for borders or background shifts first</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ======================================
+         RESPONSIVE BREAKPOINTS
+         ====================================== -->
+    <section class="section">
+      <h2 class="section-heading">Responsive breakpoints</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Width</th>
+              <th>Key changes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mobile</strong></td>
+              <td><code>&lt;640px</code></td>
+              <td>Single column, bottom nav, compact forms</td>
+            </tr>
+            <tr>
+              <td><strong>Tablet</strong></td>
+              <td><code>640-1024px</code></td>
+              <td>Two column, side nav optional</td>
+            </tr>
+            <tr>
+              <td><strong>Desktop</strong></td>
+              <td><code>&gt;1024px</code></td>
+              <td>Full layout, max-width 1024px centered</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ======================================
+         FOOTER
+         ====================================== -->
+    <footer style="text-align: center; padding: var(--space-12) 0 var(--space-8); color: var(--driftwood);">
+      <p class="caption">Cascadia Design System · Portland, Oregon</p>
+    </footer>
+
+  </div>
+
+  <!-- Modal Demo (hidden) -->
+  <div class="modal-backdrop" id="modal-demo">
+    <div class="modal">
+      <h3 class="modal-title">Delete this item?</h3>
+      <p class="modal-body body-text">
+        This will permanently remove "Update deployment scripts" from your list. This can't be undone.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn--ghost" onclick="document.getElementById('modal-demo').classList.remove('is-visible')">Cancel</button>
+        <button class="btn btn--destructive">Delete item</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const accents = [
+      { name: 'Oregon Gold',     color: '#E4A520', hover: '#FFB81C', accentNav: false },
+      { name: 'Portland Yellow', color: '#FFB81C', hover: '#FFC940', accentNav: false },
+      { name: 'Portland Blue',   color: '#418FDE', hover: '#5BA0E8', accentNav: false },
+      { name: 'Portland Green',  color: '#046A38', hover: '#058045', accentNav: false },
+      { name: 'Madrone',         color: '#B87333', hover: '#CC8844', accentNav: false },
+      { name: 'Trout',           color: '#2A9D8F', hover: '#35B5A5', accentNav: true },
+      { name: 'Huckleberry',     color: '#8B5A8A', hover: '#9E6D9D', accentNav: true },
+    ];
+
+    const root = document.documentElement;
+    const accentSelect = document.getElementById('accent-select');
+    const accentSwatch = document.getElementById('accent-swatch');
+    const accentNavToggle = document.getElementById('accent-nav-toggle');
+    const mainNav = document.querySelector('nav.nav-bar[role="navigation"]');
+
+    // Build dropdown options
+    accents.forEach((accent, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = accent.name;
+      accentSelect.appendChild(opt);
+    });
+
+    function selectAccent(index) {
+      const accent = accents[index];
+      root.style.setProperty('--app-accent', accent.color);
+      root.style.setProperty('--app-accent-hover', accent.hover);
+      accentSwatch.style.backgroundColor = accent.color;
+      accentSelect.value = index;
+
+      accentNavToggle.checked = accent.accentNav;
+      applyNavMode(accent.accentNav);
+    }
+
+    function applyNavMode(useAccentNav) {
+      if (useAccentNav) {
+        mainNav.style.setProperty('--nav-bg', 'var(--app-accent)');
+        mainNav.style.setProperty('--nav-app-name', '#fff');
+        mainNav.style.setProperty('--nav-active', '#fff');
+      } else {
+        mainNav.style.removeProperty('--nav-bg');
+        mainNav.style.removeProperty('--nav-app-name');
+        mainNav.style.removeProperty('--nav-active');
+      }
+    }
+
+    accentSelect.addEventListener('change', (e) => {
+      selectAccent(parseInt(e.target.value));
+    });
+
+    accentNavToggle.addEventListener('change', (e) => {
+      applyNavMode(e.target.checked);
+    });
+
+    selectAccent(0);
+  </script>
+
+</body>
+</html>
