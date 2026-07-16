@@ -2,7 +2,7 @@
 
 A CSS design system drawn from the Pacific Northwest — the Cascadia Doug Flag, the Oregon state flag, and the Portland city flag.
 
-One stylesheet. One font (Inter). Seven accent colors. Drop it into any project and it looks like yours.
+One stylesheet. One font (Inter). Seven accent colors. Opt-in dark mode. Drop it into any project and it looks like yours.
 
 ## What's in here
 
@@ -24,7 +24,10 @@ One stylesheet. One font (Inter). Seven accent colors. Drop it into any project 
      --app-accent-hover: #35B5A5;
    }
    ```
-4. Build your UI with the provided classes (`.btn--primary`, `.card`, `.form-input`, etc.)
+4. Optional dark mode — add `data-theme="dark"` (always dark) or `data-theme="auto"` (follows the system) to `<html>`. Leave it off for always-light.
+5. Build your UI with the provided classes (`.btn--primary`, `.card`, `.form-input`, `.alert`, `.tabs`, `.tab-bar`, etc.)
+
+Components read semantic tokens (`--color-surface`, `--color-text`, …), so an app can retheme by overriding tokens in its own stylesheet — the same mechanism the accent system and dark theme use.
 
 See [DESIGN.md](DESIGN.md) for the full spec and component reference.
 

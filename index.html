@@ -29,7 +29,6 @@
       font-family: var(--font-family);
       font-size: 0.8125rem;
       font-weight: 500;
-      color: var(--pnw-ink);
       background-color: rgba(255, 255, 255, 0.15);
       color: var(--cascadia-snow);
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -94,7 +93,7 @@
     .swatch {
       border-radius: var(--radius-lg);
       overflow: hidden;
-      border: 1px solid var(--fog);
+      border: 1px solid var(--color-border);
     }
 
     .swatch-color {
@@ -103,18 +102,18 @@
 
     .swatch-info {
       padding: var(--space-3);
-      background: #fff;
+      background: var(--color-surface);
     }
 
     .swatch-name {
       font-size: 0.875rem;
       font-weight: 500;
-      color: var(--pnw-ink);
+      color: var(--color-text);
     }
 
     .swatch-hex {
       font-size: 0.75rem;
-      color: var(--timber);
+      color: var(--color-text-secondary);
       font-family: monospace;
     }
 
@@ -128,17 +127,17 @@
     .elevation-box {
       width: 160px;
       height: 100px;
-      background: #fff;
+      background: var(--color-surface);
       border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.875rem;
       font-weight: 500;
-      color: var(--timber);
+      color: var(--color-text-secondary);
     }
 
-    .elevation-box--0 { border: 1px solid var(--fog); }
+    .elevation-box--0 { border: 1px solid var(--color-border); }
     .elevation-box--1 { box-shadow: var(--shadow-1); }
     .elevation-box--2 { box-shadow: var(--shadow-2); }
     .elevation-box--3 { box-shadow: var(--shadow-3); }
@@ -181,7 +180,7 @@
       padding-bottom: var(--space-1);
       font-size: 0.625rem;
       font-weight: 500;
-      color: var(--pnw-ink);
+      color: var(--color-on-accent);
     }
 
     /* Inline nav demos get rounded corners */
@@ -196,6 +195,25 @@
       height: 40px;
       border-radius: var(--radius-md);
       margin-bottom: var(--space-3);
+    }
+
+    /* Static demos of fixed-position components */
+    .static-demo .tab-bar,
+    .static-demo .toast-stack,
+    .static-demo .fab {
+      position: static;
+    }
+
+    .static-demo .tab-bar {
+      display: flex;
+      max-width: 480px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .static-demo .toast-stack {
+      align-items: flex-start;
     }
   </style>
 </head>
@@ -220,6 +238,11 @@
         <input type="checkbox" id="accent-nav-toggle">
         <span>Accent nav</span>
       </label>
+      <select id="theme-select" aria-label="Theme">
+        <option value="">Light</option>
+        <option value="dark">Dark</option>
+        <option value="auto">Auto</option>
+      </select>
     </div>
   </nav>
 
@@ -370,32 +393,32 @@
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Display hero — 48px / weight 300 / line-height 1.20</p>
-          <p class="display-hero">Projects this quarter</p>
+          <p class="display-hero">Farmers market season</p>
         </div>
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Page heading — 32px / weight 400 / line-height 1.30</p>
-          <p class="page-heading">Weekly activity summary</p>
+          <p class="page-heading">Weekly ride summary</p>
         </div>
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Section heading — 24px / weight 500 / line-height 1.40</p>
-          <p class="section-heading" style="color: var(--pnw-ink);">Recent activity</p>
+          <p class="section-heading" style="color: var(--color-text);">Coffee stops nearby</p>
         </div>
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Card title — 18px / weight 500 / line-height 1.40</p>
-          <p class="card-title">Backyard sensor network</p>
+          <p class="card-title">Forest Park loop</p>
         </div>
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Body — 16px / weight 400 / line-height 1.65</p>
-          <p class="body-text">A lightweight monitoring setup that checks temperature, humidity, and soil moisture across three garden zones. Data syncs every fifteen minutes and alerts when readings fall outside configured thresholds.</p>
+          <p class="body-text">A quiet loop under the firs, down Leif Erikson to the Thurman Street bridge and back through Northwest. Ride stats sync every fifteen minutes, and alerts go out when the trail gates close early.</p>
         </div>
 
         <div class="mb-8">
           <p class="caption text-driftwood mb-2">Body small — 14px / weight 400 / line-height 1.50</p>
-          <p class="body-small text-muted">Updated 2 hours ago · 3 zones · 12 sensors</p>
+          <p class="body-small text-muted">Updated 2 hours ago · 11 miles · 2 coffee stops</p>
         </div>
 
         <div>
@@ -422,6 +445,7 @@
           <button class="btn btn--ghost">Ghost</button>
           <button class="btn btn--destructive">Delete</button>
           <button class="btn btn--primary btn--compact">Compact</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
         </div>
       </div>
 
@@ -430,19 +454,19 @@
         <h3 class="subsection-title">Cards</h3>
         <div class="card-grid">
           <div class="card card--interactive">
-            <h4 class="card-title">Garage door monitor</h4>
-            <p class="card-body">Tracks open/close state with a magnetic reed sensor. Sends alerts if left open past 10pm.</p>
+            <h4 class="card-title">Bridge commute tracker</h4>
+            <p class="card-body">Logs every crossing of the Tilikum and the Steel. Suggests fenders when the morning radar looks serious.</p>
             <div class="mt-4">
               <span class="badge badge--positive">Active</span>
-              <span class="badge badge--neutral">Automation</span>
+              <span class="badge badge--neutral">Commute</span>
             </div>
           </div>
           <div class="card card--interactive">
-            <h4 class="card-title">Weekly grocery list</h4>
-            <p class="card-body">Shared household list that syncs across devices. Organize by store aisle or category.</p>
+            <h4 class="card-title">Food cart roulette</h4>
+            <p class="card-body">Picks lunch from carts within a ten-minute walk. Filter by pod, cuisine, or covered seating for the rainy months.</p>
             <div class="mt-4">
               <span class="badge badge--accent">Pinned</span>
-              <span class="badge badge--neutral">12 items</span>
+              <span class="badge badge--neutral">12 carts</span>
             </div>
           </div>
           <div class="card card--interactive card--surface">
@@ -450,11 +474,11 @@
             <div style="display: flex; gap: var(--space-8); margin-top: var(--space-4);">
               <div class="stat-card">
                 <div class="stat-value">14</div>
-                <div class="stat-label">Tasks done</div>
+                <div class="stat-label">Rides logged</div>
               </div>
               <div class="stat-card">
                 <div class="stat-value">3</div>
-                <div class="stat-label">Pending</div>
+                <div class="stat-label">Rainy days</div>
               </div>
             </div>
           </div>
@@ -465,18 +489,18 @@
       <div class="subsection">
         <h3 class="subsection-title">Forms &amp; inputs</h3>
         <div class="card" style="max-width: 560px;">
-          <h4 class="card-title mb-6">Add an item</h4>
+          <h4 class="card-title mb-6">Log a stop</h4>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="item-name">Name</label>
-              <input class="form-input" type="text" id="item-name" placeholder="What are you adding?">
+              <input class="form-input" type="text" id="item-name" placeholder="Which café?">
             </div>
             <div class="form-group">
               <label class="form-label" for="item-category">Category</label>
               <select class="form-input" id="item-category">
-                <option>Task</option>
-                <option>Note</option>
-                <option>Reminder</option>
+                <option>Coffee shop</option>
+                <option>Food cart</option>
+                <option>Brewery</option>
               </select>
             </div>
           </div>
@@ -486,7 +510,7 @@
           </div>
           <div style="display: flex; gap: var(--space-3); justify-content: flex-end;">
             <button class="btn btn--ghost">Cancel</button>
-            <button class="btn btn--primary">Save item</button>
+            <button class="btn btn--primary">Save stop</button>
           </div>
         </div>
       </div>
@@ -507,25 +531,25 @@
             <tbody>
               <tr>
                 <td>Apr 5</td>
-                <td>Update deployment scripts</td>
+                <td>Ride the Springwater to Sellwood</td>
                 <td><span class="badge badge--positive">Done</span></td>
                 <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
               </tr>
               <tr>
                 <td>Apr 4</td>
-                <td>Review pull requests</td>
+                <td>Browse the stacks at Powell's</td>
                 <td><span class="badge badge--positive">Done</span></td>
                 <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9734;</td>
               </tr>
               <tr>
                 <td>Apr 4</td>
-                <td>Fix notification service</td>
+                <td>Find a dry route up Mt. Tabor</td>
                 <td><span class="badge badge--warning">In progress</span></td>
                 <td class="text-accent">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
               </tr>
               <tr>
                 <td>Apr 3</td>
-                <td>Archive old logs</td>
+                <td>Winterize the porch garden</td>
                 <td><span class="badge badge--neutral">Backlog</span></td>
                 <td class="text-accent">&#9733;&#9733;&#9733;&#9734;&#9734;</td>
               </tr>
@@ -544,6 +568,146 @@
           <span class="badge badge--negative">Negative</span>
           <span class="badge badge--accent">Accent</span>
         </div>
+      </div>
+
+      <!-- Checkboxes, radios & switches -->
+      <div class="subsection">
+        <h3 class="subsection-title">Checkboxes, radios &amp; switches</h3>
+        <div class="card" style="max-width: 560px;">
+          <label class="form-check"><input type="checkbox" class="form-checkbox" checked> <span>Send a reminder the night before</span></label>
+          <label class="form-check"><input type="checkbox" class="form-checkbox"> <span>Repeat weekly</span></label>
+          <label class="form-check"><input type="radio" class="form-radio" name="list-sort" checked> <span>Sort by neighborhood</span></label>
+          <label class="form-check"><input type="radio" class="form-radio" name="list-sort"> <span>Sort by distance</span></label>
+          <label class="form-check"><input type="checkbox" class="switch" checked> <span>Notifications</span></label>
+          <label class="form-check"><input type="checkbox" class="switch" disabled> <span>Auto-archive (not available yet)</span></label>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="subsection">
+        <h3 class="subsection-title">Alerts</h3>
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); max-width: 640px;">
+          <div class="alert"><div><span class="alert-title">Quiet hours</span>Notifications pause between 10pm and 7am. Anything that arrives overnight waits until morning.</div></div>
+          <div class="alert alert--info"><div><span class="alert-title">Rain incoming</span>Steady showers expected by 3pm. Covered bike parking fills up early.</div></div>
+          <div class="alert alert--positive"><div><span class="alert-title">Route saved</span>Your Tilikum Crossing loop is ready for tomorrow's commute.</div></div>
+          <div class="alert alert--warning"><div><span class="alert-title">Bridge lift scheduled</span>The Steel Bridge lifts at 4:45pm. Add ten minutes or take the Broadway.</div></div>
+          <div class="alert alert--negative"><div><span class="alert-title">Route unavailable</span>The Springwater path is closed at SE 82nd for repaving. Pick a detour before heading out.</div></div>
+        </div>
+      </div>
+
+      <!-- Toasts -->
+      <div class="subsection">
+        <h3 class="subsection-title">Toasts</h3>
+        <div class="static-demo">
+          <div class="toast-stack">
+            <div class="toast">Stop saved</div>
+            <div class="toast">Route shared <button class="toast-action">Undo</button></div>
+          </div>
+        </div>
+        <p class="body-small text-muted mt-4">
+          Toasts live in a fixed <code>.toast-stack</code> in the bottom-right corner (full-width on mobile).
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="subsection">
+        <h3 class="subsection-title">Tabs</h3>
+        <div class="tabs">
+          <button class="tab active">This week</button>
+          <button class="tab">Past rides</button>
+          <button class="tab">All routes</button>
+        </div>
+      </div>
+
+      <!-- Menu -->
+      <div class="subsection">
+        <h3 class="subsection-title">Menu</h3>
+        <div class="menu" style="max-width: 220px;">
+          <button class="menu-item">Edit stop</button>
+          <button class="menu-item">Duplicate</button>
+          <button class="menu-item">Share route</button>
+          <hr class="menu-divider">
+          <button class="menu-item menu-item--destructive">Delete stop</button>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="subsection">
+        <h3 class="subsection-title">Progress</h3>
+        <div style="max-width: 480px; display: flex; flex-direction: column; gap: var(--space-4);">
+          <div>
+            <p class="caption text-muted mb-2">Coffee passport — 9 of 14 stamps</p>
+            <div class="progress"><div class="progress-fill" style="width: 64%;"></div></div>
+          </div>
+          <div>
+            <p class="caption text-muted mb-2">Storage used — 82%</p>
+            <div class="progress"><div class="progress-fill" style="width: 82%;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton -->
+      <div class="subsection">
+        <h3 class="subsection-title">Skeleton loading</h3>
+        <div class="card" style="max-width: 400px;">
+          <div style="display: flex; gap: var(--space-4); align-items: center;">
+            <div class="skeleton skeleton--circle" style="width: 40px; height: 40px; flex-shrink: 0;"></div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: var(--space-2);">
+              <div class="skeleton skeleton--text" style="width: 60%;"></div>
+              <div class="skeleton skeleton--text" style="width: 90%;"></div>
+            </div>
+          </div>
+        </div>
+        <p class="body-small text-muted mt-4">Shimmer stops under <code>prefers-reduced-motion</code>.</p>
+      </div>
+
+      <!-- Empty state -->
+      <div class="subsection">
+        <h3 class="subsection-title">Empty state</h3>
+        <div class="card" style="max-width: 560px;">
+          <div class="empty-state">
+            <div class="empty-state-icon">&#9783;</div>
+            <h4 class="empty-state-title">No stops yet</h4>
+            <p class="empty-state-description">Every café you log shows up here, sorted by neighborhood so new spots are easy to find.</p>
+            <button class="btn btn--primary">Log your first stop</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breadcrumbs -->
+      <div class="subsection">
+        <h3 class="subsection-title">Breadcrumbs</h3>
+        <ol class="breadcrumbs">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Neighborhoods</a></li>
+          <li aria-current="page">Alberta Arts</li>
+        </ol>
+      </div>
+
+      <!-- Mobile tab bar -->
+      <div class="subsection">
+        <h3 class="subsection-title">Tab bar (mobile bottom navigation)</h3>
+        <div class="static-demo">
+          <nav class="tab-bar" aria-label="Demo tab bar">
+            <a href="#" class="tab-bar-item active"><span class="tab-bar-icon">&#8962;</span>Home</a>
+            <a href="#" class="tab-bar-item"><span class="tab-bar-icon">&#9776;</span>Routes</a>
+            <a href="#" class="tab-bar-item"><span class="tab-bar-icon">&#9881;</span>Settings</a>
+          </nav>
+        </div>
+        <p class="body-small text-muted mt-4">
+          Fixed to the bottom edge below 640px, hidden above it. Add <code>.has-tab-bar</code> to <code>&lt;body&gt;</code> so content clears it.
+        </p>
+      </div>
+
+      <!-- FAB -->
+      <div class="subsection">
+        <h3 class="subsection-title">Floating action button</h3>
+        <div class="static-demo">
+          <button class="fab" aria-label="Add item">+</button>
+        </div>
+        <p class="body-small text-muted mt-4">
+          Fixed to the bottom-right corner; moves up automatically when a tab bar is present. Keeps the primary action reachable on mobile.
+        </p>
       </div>
 
       <!-- Modal trigger -->
@@ -675,7 +839,7 @@
       <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="card" style="border-top: 3px solid var(--portland-green);">
           <h4 class="card-title" style="color: var(--portland-green);">Do</h4>
-          <ul class="body-small" style="color: var(--timber); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
+          <ul class="body-small" style="color: var(--color-text-secondary); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
             <li>Use Cascadia Green for navigation and structural elements</li>
             <li>Use the warm accent for interactive elements and highlights</li>
             <li>Keep border-radius at 6-8px</li>
@@ -687,7 +851,7 @@
         </div>
         <div class="card" style="border-top: 3px solid var(--destructive);">
           <h4 class="card-title" style="color: var(--destructive);">Don't</h4>
-          <ul class="body-small" style="color: var(--timber); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
+          <ul class="body-small" style="color: var(--color-text-secondary); padding-left: 1.25em; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2);">
             <li>Use Cascadia Green or Blue for large interactive surfaces</li>
             <li>Uppercase anything except table headers and badges</li>
             <li>Go below 6px or above 8px radius (except pills)</li>
@@ -739,7 +903,7 @@
     <!-- ======================================
          FOOTER
          ====================================== -->
-    <footer style="text-align: center; padding: var(--space-12) 0 var(--space-8); color: var(--driftwood);">
+    <footer style="text-align: center; padding: var(--space-12) 0 var(--space-8); color: var(--color-text-muted);">
       <p class="caption">Cascadia Design System · Portland, Oregon</p>
     </footer>
 
@@ -748,9 +912,9 @@
   <!-- Modal Demo (hidden) -->
   <div class="modal-backdrop" id="modal-demo">
     <div class="modal">
-      <h3 class="modal-title">Delete this item?</h3>
+      <h3 class="modal-title">Delete this stop?</h3>
       <p class="modal-body body-text">
-        This will permanently remove "Update deployment scripts" from your list. This can't be undone.
+        This will permanently remove "Ride the Springwater to Sellwood" from your list. This can't be undone.
       </p>
       <div class="modal-actions">
         <button class="btn btn--ghost" onclick="document.getElementById('modal-demo').classList.remove('is-visible')">Cancel</button>
@@ -813,6 +977,15 @@
 
     accentNavToggle.addEventListener('change', (e) => {
       applyNavMode(e.target.checked);
+    });
+
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.addEventListener('change', (e) => {
+      if (e.target.value) {
+        root.dataset.theme = e.target.value;
+      } else {
+        delete root.dataset.theme;
+      }
     });
 
     selectAccent(0);
